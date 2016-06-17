@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.study.springrest.mapper.restMapper">
+	<insert id="insert">
+		insert into board( title, content, user_name, view_cnt )
+		values( #{title}, #{content}, #{user_name}, #{view_cnt} )
+	</insert>
+	
+	<select id="get" resultType="com.study.springrest.domain.RestVO">
+		select * from board where board_no = #{board_no}
+	</select>
+	
+	<select id="getList" resultType="com.study.springrest.domain.RestVO">
+		select * from board
+	</select>
+	
+	<update id="readcnt">
+		update board set view_cnt = view_cnt + 1 where board_no = #{board_no} 
+	</update>
+	
+	<update id="increaseReply">
+		update board set reply_cnt = reply_cnt + 1 where board_no = #{board_no} 
+	</update>
+	
+	<update id="update">
+		update board
+		<set> 
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+			<if test="user_name != null">
+				user_name = #{user_name}
+			</if>
+		</set>
+		 where board_no = #{board_no}
+	</update>
+	
+	<delete id="delete">
+		delete from board where board_no = #{board_no}
+	</delete>
+</mapper>

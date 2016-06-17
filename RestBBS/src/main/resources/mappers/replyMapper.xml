@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.study.springrest.mapper.replyMapper">
+	<insert id="insert">
+		insert into reply( reply_no, content, user_name, board_no )
+		values( #{reply_no}, #{content}, #{user_name}, #{board_no} )
+	</insert>
+	
+	<select id="get" resultType="com.study.springrest.domain.ReplyVO">
+		select * from reply where board_no = #{board_no}
+	</select>
+	
+	<select id="getList" resultType="com.study.springrest.domain.ReplyVO">
+		select * from reply where board_no = #{board_no}
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from reply where board_no = #{board_no}
+	</select>
+	
+	<select id="getListPage" resultType="com.study.springrest.domain.ReplyVO">
+		select * from reply where board_no = #{bno}
+		order by reply_no asc
+		limit #{cri.startPage}, #{cri.articlePerPage}
+	</select>
+	
+	<update id="update">
+		update reply
+		<set> 
+			<if test="content != null">
+				content = #{content},
+			</if>
+			<if test="user_name != null">
+				user_name = #{user_name},
+			</if>
+			<if test="board_no != null">
+				board_no = #{board_no}
+			</if>
+		</set>
+		 where reply_no = #{reply_no}
+	</update>
+	
+	<delete id="delete">
+		delete from reply where reply_no = #{reply_no}
+	</delete>
+</mapper>
